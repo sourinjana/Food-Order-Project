@@ -1,0 +1,37 @@
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2><i class="fa fa-map-marker"></i><span class="location" id="location"></span></h2>
+            <h6 class="weather" id="weather"></h6>
+            <h4><span class="temp" id="temp"></span><sup>o</sup>C</h4>
+            <img src="" alt="" id="icon">
+            <button onclick="window.location.reload()" class="refresh"><i class="fa fa-refresh"></i></button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script>
+        var link = "https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=2487e6317e7c522a7fd0f30a922def39";
+
+        var request = new XMLHttpRequest();
+        request.open('GET', link, true);
+        request.onload = function () {
+            var obj = JSON.parse(this.response);
+            console.log(obj);
+            document.getElementById('weather').innerHTML = obj.weather[0].description;
+            document.getElementById('location').innerHTML = obj.name;
+            document.getElementById('temp').innerHTML =Math.round(obj.main.temp - 273.15);
+            document.getElementById('icon').src = "https://openweathermap.org/img/wn/" + obj.weather[0].icon + ".png";
+
+
+        }
+        request.send();
+    </script>
+</body>
+</html>
